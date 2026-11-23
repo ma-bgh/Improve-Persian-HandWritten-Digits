@@ -122,7 +122,7 @@ Delete them to retrain.
 | 7 | 0.2975 | 99.76% | 99.79% | ~31 | 403 |
 | 8 | 0.2962 | 99.78% | 99.79% | ~31 | 392 |
 
-![ResNet training curve](resnet_training_curve.png)
+![ResNet training curve](Result/resnet_training_curve.png)
 
 Train accuracy is measured with augmentation and dropout, while validation uses the EMA model without augmentation,
 which is why validation accuracy is higher than train accuracy during most of training. With label smoothing 0.05 on
@@ -145,7 +145,7 @@ Best validation accuracy on its own 3-class task: **99.53%** (epoch 7 of 14, EMA
 
 The "Base CNN" row reproduces the earlier standalone run exactly (99.82%, 27 errors), confirming the split is identical.
 
-![Test errors per method](images/test_errors_comparison.png)
+![Test errors per method](Result/test_errors_comparison.png)
 
 ### Specialist weight α (validation)
 
@@ -181,7 +181,7 @@ Validation NLL gets monotonically worse as the specialist weight increases, so �
 | 8 | 99.93% | 1 |
 | 9 | 99.80% | 3 |
 
-![Final errors per class](images/errors_per_class_final.png)
+![Final errors per class](Result/errors_per_class_final.png)
 
 Most frequent confusions (count: true → predicted): 7: 2→3, 3: 3→4, 3: 3→2, 2: 9→6, 2: 6→9, 2: 4→2, 2: 2→4, 2: 2→1.
 
