@@ -181,7 +181,6 @@ Validation NLL gets monotonically worse as the specialist weight increases, so �
 | 8 | 99.93% | 1 |
 | 9 | 99.80% | 3 |
 
-![Final errors per class](Result/errors_per_class_final.png)
 
 Most frequent confusions (count: true → predicted): 7: 2→3, 3: 3→4, 3: 3→2, 2: 9→6, 2: 6→9, 2: 4→2, 2: 2→4, 2: 2→1.
 
