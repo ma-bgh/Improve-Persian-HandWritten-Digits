@@ -1,0 +1,97 @@
+train=120000 val=15000 test=15000
+
+--- Training resnet: kind=res width=24 params=371314 train=120000 epochs=8
+[resnet] epoch  1/8 | loss 0.5389 | train acc 0.9315 | val acc (EMA) 0.9946 | 245s
+[resnet] epoch  2/8 | loss 0.3241 | train acc 0.9919 | val acc (EMA) 0.9966 | 314s
+[resnet] epoch  3/8 | loss 0.3123 | train acc 0.9938 | val acc (EMA) 0.9971 | 362s
+[resnet] epoch  4/8 | loss 0.3069 | train acc 0.9952 | val acc (EMA) 0.9976 | 386s
+[resnet] epoch  5/8 | loss 0.3034 | train acc 0.9960 | val acc (EMA) 0.9977 | 382s
+[resnet] epoch  6/8 | loss 0.3006 | train acc 0.9965 | val acc (EMA) 0.9979 | 399s
+[resnet] epoch  7/8 | loss 0.2975 | train acc 0.9976 | val acc (EMA) 0.9979 | 403s
+[resnet] epoch  8/8 | loss 0.2962 | train acc 0.9978 | val acc (EMA) 0.9979 | 392s
+[resnet] best val acc 0.9979 -> saved member_resnet.pt
+
+--- Training specialist: kind=net width=32 params=287267 train=36000 epochs=14
+[specialist] epoch  1/14 | loss 0.3279 | train acc 0.9455 | val acc (EMA) 0.9824 | 118s
+[specialist] epoch  2/14 | loss 0.2170 | train acc 0.9859 | val acc (EMA) 0.9940 | 123s
+[specialist] epoch  3/14 | loss 0.2071 | train acc 0.9888 | val acc (EMA) 0.9942 | 132s
+[specialist] epoch  4/14 | loss 0.2004 | train acc 0.9908 | val acc (EMA) 0.9938 | 108s
+[specialist] epoch  5/14 | loss 0.1981 | train acc 0.9914 | val acc (EMA) 0.9938 | 119s
+[specialist] epoch  6/14 | loss 0.1953 | train acc 0.9922 | val acc (EMA) 0.9944 | 125s
+[specialist] epoch  7/14 | loss 0.1950 | train acc 0.9921 | val acc (EMA) 0.9953 | 131s
+[specialist] epoch  8/14 | loss 0.1918 | train acc 0.9932 | val acc (EMA) 0.9951 | 131s
+[specialist] epoch  9/14 | loss 0.1890 | train acc 0.9942 | val acc (EMA) 0.9949 | 132s
+[specialist] epoch 10/14 | loss 0.1886 | train acc 0.9942 | val acc (EMA) 0.9942 | 132s
+[specialist] epoch 11/14 | loss 0.1864 | train acc 0.9949 | val acc (EMA) 0.9940 | 116s
+[specialist] epoch 12/14 | loss 0.1855 | train acc 0.9953 | val acc (EMA) 0.9944 | 132s
+[specialist] epoch 13/14 | loss 0.1836 | train acc 0.9960 | val acc (EMA) 0.9944 | 115s
+[specialist] epoch 14/14 | loss 0.1836 | train acc 0.9961 | val acc (EMA) 0.9944 | 124s
+[specialist] best val acc 0.9953 -> saved specialist.pt
+
+Computing predictions (with TTA) ...
+  base: done in 171s
+  resnet: done in 138s
+
+Chosen on validation: TTA=on, weight(base)=0.1, weight(resnet)=0.9
+Specialist applied to 4501 val and 4498 test samples (predicted in [2, 3, 4])
+alpha (specialist weight) -> val NLL / val acc
+  0.0: 0.04768 / 99.84%
+  0.1: 0.04822 / 99.85%
+  0.2: 0.04878 / 99.85%
+  0.3: 0.04934 / 99.85%
+  0.4: 0.04991 / 99.84%
+  0.5: 0.05049 / 99.83%
+  0.6: 0.05108 / 99.84%
+  0.7: 0.05168 / 99.84%
+  0.8: 0.05229 / 99.84%
+  0.9: 0.05290 / 99.83%
+  1.0: 0.05354 / 99.83%
+Chosen alpha = 0.0
+
+======================================================================================
+Model                             val acc  test acc  test err err in [2, 3, 4]
+Base CNN (plain)                   99.83%    99.82%        27             20
+Base CNN + TTA                     99.87%    99.85%        23             16
+ResNet (plain)                     99.79%    99.80%        30             22
+ResNet + TTA                       99.81%    99.83%        26             19
+Ensemble (chosen settings)         99.84%    99.83%        26             19
+Ensemble + Specialist (FINAL)      99.84%    99.83%        26             19
+======================================================================================
+Previous run (base model): test accuracy 99.82%, 27 errors  (should match the Base CNN (plain) row; if not, the data split differs)
+
+Per-class accuracy (FINAL):
+  class 0: 100.00%   errors=0
+  class 1: 99.93%   errors=1
+  class 2: 99.27%   errors=11
+  class 3: 99.60%   errors=6
+  class 4: 99.87%   errors=2
+  class 5: 100.00%   errors=0
+  class 6: 99.87%   errors=2
+  class 7: 100.00%   errors=0
+  class 8: 99.93%   errors=1
+  class 9: 99.80%   errors=3
+
+Confusion matrix (rows=true, cols=pred):
+[[1500    0    0    0    0    0    0    0    0    0]
+ [   0 1499    0    0    0    0    0    0    0    1]
+ [   0    2 1489    7    2    0    0    0    0    0]
+ [   0    0    3 1494    3    0    0    0    0    0]
+ [   0    0    2    0 1498    0    0    0    0    0]
+ [   0    0    0    0    0 1500    0    0    0    0]
+ [   0    0    0    0    0    0 1498    0    0    2]
+ [   0    0    0    0    0    0    0 1500    0    0]
+ [   0    1    0    0    0    0    0    0 1499    0]
+ [   0    1    0    0    0    0    2    0    0 1497]]
+
+Most frequent confusions (count: true -> pred):
+  7: 2 -> 3
+  3: 3 -> 4
+  3: 3 -> 2
+  2: 9 -> 6
+  2: 6 -> 9
+  2: 4 -> 2
+  2: 2 -> 4
+  2: 2 -> 1
+
+Saved: ensemble_log.txt, ensemble_probs.npz, errors_grid.png, errors_per_class.png, member_resnet.pt, specialist.pt
+Total time: 83.1 min
