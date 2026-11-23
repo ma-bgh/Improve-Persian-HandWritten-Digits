@@ -122,7 +122,7 @@ Delete them to retrain.
 | 7 | 0.2975 | 99.76% | 99.79% | ~31 | 403 |
 | 8 | 0.2962 | 99.78% | 99.79% | ~31 | 392 |
 
-![ResNet training curve](images/resnet_training_curve.png)
+![ResNet training curve](resnet_training_curve.png)
 
 Train accuracy is measured with augmentation and dropout, while validation uses the EMA model without augmentation,
 which is why validation accuracy is higher than train accuracy during most of training. With label smoothing 0.05 on
