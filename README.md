@@ -1,1 +1,1 @@
-# Improve-Persian-HandWritten-Digits
+# Improved-Persian-HandWritten-Digits
